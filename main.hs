@@ -1,28 +1,18 @@
 -- Modules
 module Main where
 
+import Banana
+
 main :: IO ()
-main = putStrLn (makeHTML "My page title" "My page content")
+main = do
+  let content = render html
+  writeFile "index.html" content
 
--- Create Document
-makeHTML :: String -> String -> String
-makeHTML title body =
+html :: Html
+html =
   html_
-    (head_ (title_ title) <> body_ body)
-
--- HTML Tags
-html_ :: String -> String
-html_ = el "html"
-
-head_ :: String -> String
-head_ = el "head"
-
-body_ :: String -> String
-body_ = el "body"
-
-title_ :: String -> String
-title_ = el "title"
-
--- Tag Template
-el :: String -> String -> String
-el tag content = "<" <> tag <> ">" <> content <> "</" <> tag <> ">"
+    "stoobit"
+    ( append_
+        (h1_ "stoobit")
+        (p_ "This is my first blog post.")
+    )
